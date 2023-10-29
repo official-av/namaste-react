@@ -39,13 +39,20 @@ body {
 .restaurant-card {
   padding: 5px;
   width: 200px;
+  min-height: 440px;
   border: 1px solid #efefef;
-  margin: 0 5px;
+  background-color: #f0f0f0;
+  margin: 5px;
 }
 .restaurant-card:hover,
 .btn-top-rated:hover {
   cursor: pointer;
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+.restaurant-img {
+  width: 200px;
+  height: 170px;
+  object-fit: fill;
 }
 .search-container {
   padding: 20px;
@@ -66,4 +73,18 @@ body {
   background-color: green;
   border: 1px solid green;
   color: white;
+}
+
+.shimmer {
+  color: grey;
+  display:inline-block;
+  -webkit-mask:linear-gradient(90deg, #000 30%, #0000, #000 70%) 100% / 300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2.5s infinite;
+  font-size: 50px;
+  max-width:200px;
+}
+
+@keyframes shimmer {
+  100% {-webkit-mask-position:left}
 }

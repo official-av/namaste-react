@@ -1,9 +1,7 @@
-import { SearchComponent } from "../utils/Search";
+import { useEffect, useState } from "react";
 import { RestaurantContainer } from "../restaurant/RestaurantContainer";
-import { RESTAURANTS_DATA } from "../utils/mockData";
-import { useState } from "react";
+import { SearchComponent } from "../utils/Search";
 
-const filteredArr = RESTAURANTS_DATA;
 const FilterButtonComponent = ({ filter, filterSelected }) => (
   <button
     className={(filterSelected ? "btn-selected" : "") + " btn-top-rated"}
@@ -14,8 +12,35 @@ const FilterButtonComponent = ({ filter, filterSelected }) => (
   </button>
 );
 const BodyComponent = () => {
-  let [filterSelected, updateFilterSelected] = useState(false);
-  console.log(updateFilterSelected);
+  const tenFakeRestaurantCards = Array.from({ length: 10 }, (e, index) => ({
+    id: index,
+  }));
+  const [restaurants, updateRestaurants] = useState(tenFakeRestaurantCards);
+  const [filterSelected, updateFilterSelected] = useState(false);
+
+  useEffect(() => {
+    // gets called after component renders
+    console.log("use Effect called");
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const callData = await fetch(
+      "https://www.swiggy.com/api/seo/getListing?lat=28.67003492726483&lng=77.11469986756225"
+    );
+    const { data } = await callData.json();
+    const { cards } = data.success;
+
+    const restaurants =
+      cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants.map(
+        (r) => r?.info
+      );
+    console.log(restaurants);
+    updateRestaurants(restaurants);
+  };
+
+  console.log("prints first ofcourse");
+
   return (
     <div className="content-container">
       <SearchComponent />
@@ -28,8 +53,8 @@ const BodyComponent = () => {
       <RestaurantContainer
         restaurants={
           filterSelected
-            ? filteredArr.filter((r) => r.rating >= 4)
-            : filteredArr
+            ? restaurants.filter((r) => r.avgRating >= 4)
+            : restaurants
         }
       />
     </div>
