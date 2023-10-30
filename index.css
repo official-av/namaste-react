@@ -75,16 +75,25 @@ body {
   color: white;
 }
 
+.actions-container {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .shimmer {
   color: grey;
-  display:inline-block;
-  -webkit-mask:linear-gradient(90deg, #000 30%, #0000, #000 70%) 100% / 300% 100%;
+  display: inline-block;
+  -webkit-mask: linear-gradient(90deg, #000 30%, #0000, #000 70%) 100% / 300%
+    100%;
   background-repeat: no-repeat;
   animation: shimmer 2.5s infinite;
   font-size: 50px;
-  max-width:200px;
+  max-width: 200px;
 }
 
 @keyframes shimmer {
-  100% {-webkit-mask-position:left}
+  100% {
+    -webkit-mask-position: left;
+  }
 }

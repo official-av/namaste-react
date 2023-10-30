@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { RestaurantContainer } from "../restaurant/RestaurantContainer";
-import { SearchComponent } from "../utils/Search";
+import SearchComponent from "../utils/Search";
+import { GET_RESTAURANTS_URL } from "../utils/constants";
 
+let allRestaurants = [];
+let filterSelected = false;
 const FilterButtonComponent = ({ filter, filterSelected }) => (
   <button
     className={(filterSelected ? "btn-selected" : "") + " btn-top-rated"}
     onClick={filter}
-    onMouseOver={() => console.log("hover on me")}
   >
     Top Rated Restaurants
   </button>
@@ -15,8 +17,8 @@ const BodyComponent = () => {
   const tenFakeRestaurantCards = Array.from({ length: 10 }, (e, index) => ({
     id: index,
   }));
-  const [restaurants, updateRestaurants] = useState(tenFakeRestaurantCards);
-  const [filterSelected, updateFilterSelected] = useState(false);
+  const [restaurants, setRestaurants] = useState(tenFakeRestaurantCards);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     // gets called after component renders
@@ -25,9 +27,7 @@ const BodyComponent = () => {
   }, []);
 
   const fetchData = async () => {
-    const callData = await fetch(
-      "https://www.swiggy.com/api/seo/getListing?lat=28.67003492726483&lng=77.11469986756225"
-    );
+    const callData = await fetch(GET_RESTAURANTS_URL);
     const { data } = await callData.json();
     const { cards } = data.success;
 
@@ -36,27 +36,39 @@ const BodyComponent = () => {
         (r) => r?.info
       );
     console.log(restaurants);
-    updateRestaurants(restaurants);
+    allRestaurants = restaurants;
+    setRestaurants(allRestaurants);
   };
-
-  console.log("prints first ofcourse");
 
   return (
     <div className="content-container">
-      <SearchComponent />
-      <FilterButtonComponent
-        filterSelected={filterSelected}
-        filter={() => {
-          updateFilterSelected(!filterSelected);
-        }}
-      />
-      <RestaurantContainer
-        restaurants={
-          filterSelected
-            ? restaurants.filter((r) => r.avgRating >= 4)
-            : restaurants
-        }
-      />
+      <div className="actions-container">
+        <SearchComponent
+          searchTypeEventCallback={(t) => setSearchText(t)}
+          searchClickEventCallback={() =>
+            setRestaurants(
+              searchText
+                ? allRestaurants.filter((r) =>
+                    r?.name.toLowerCase().includes(searchText.toLowerCase())
+                  )
+                : allRestaurants
+            )
+          }
+          searchText={searchText}
+        />
+        <FilterButtonComponent
+          filterSelected={filterSelected}
+          filter={() => {
+            filterSelected = !filterSelected;
+            setRestaurants(
+              filterSelected
+                ? allRestaurants.filter((r) => r.avgRating >= 4)
+                : allRestaurants
+            );
+          }}
+        />
+      </div>
+      <RestaurantContainer restaurants={restaurants} />
     </div>
   );
 };
