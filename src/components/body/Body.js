@@ -5,24 +5,31 @@ import { GET_RESTAURANTS_URL } from "../utils/constants";
 
 let allRestaurants = [];
 let filterSelected = false;
-const FilterButtonComponent = ({ filter, filterSelected }) => (
-  <button
-    className={(filterSelected ? "btn-selected" : "") + " btn-top-rated"}
-    onClick={filter}
-  >
-    Top Rated Restaurants
-  </button>
-);
+
+const FilterButtonComponent = ({ filterChangeCallback, filterSelected }) => {
+  console.log("filter rendererd");
+  return (
+    <button
+      className={(filterSelected ? "btn-selected" : "") + " btn-top-rated"}
+      onClick={filterChangeCallback}
+    >
+      Top Rated Restaurants
+    </button>
+  );
+};
+
 const BodyComponent = () => {
+  console.log("body rendered");
   const tenFakeRestaurantCards = Array.from({ length: 10 }, (e, index) => ({
     id: index,
   }));
   const [restaurants, setRestaurants] = useState(tenFakeRestaurantCards);
-  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     // gets called after component renders
-    console.log("use Effect called");
+    console.log(
+      "use Effect called, only renders once after component's initial render"
+    );
     fetchData();
   }, []);
 
@@ -44,8 +51,7 @@ const BodyComponent = () => {
     <div className="content-container">
       <div className="actions-container">
         <SearchComponent
-          searchTypeEventCallback={(t) => setSearchText(t)}
-          searchClickEventCallback={() =>
+          searchClickEventCallback={(searchText) =>
             setRestaurants(
               searchText
                 ? allRestaurants.filter((r) =>
@@ -54,11 +60,10 @@ const BodyComponent = () => {
                 : allRestaurants
             )
           }
-          searchText={searchText}
         />
         <FilterButtonComponent
           filterSelected={filterSelected}
-          filter={() => {
+          filterChangeCallback={() => {
             filterSelected = !filterSelected;
             setRestaurants(
               filterSelected
