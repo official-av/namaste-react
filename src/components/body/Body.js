@@ -27,9 +27,11 @@ const BodyComponent = () => {
 
   useEffect(() => {
     // gets called after component renders
-    console.log(
-      "use Effect called, only renders once after component's initial render"
-    );
+    // if no dependecy array => useEffect is called on every component re-render
+    // if no empty depndency array => useEffect is called just once after initial component render
+    // if depndency array has some values => useEffect is called when any of the dependecies change
+    // example: useEffect(() => {}, [ anyStateVariable ]) (when anyStateVariable changes useEffect is called again )
+    console.log("use Effect gets called");
     fetchData();
   }, []);
 
