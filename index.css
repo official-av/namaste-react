@@ -18,18 +18,16 @@ body {
   height: 64px;
 }
 .nav-items {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   justify-content: center;
 }
-.nav-items > ul {
+.nav-items > a {
   display: flex;
-  list-style-type: none;
-}
-.nav-items > ul > li {
+  align-items: center;
   color: white;
-  font-size: 16px;
-  padding: 0 10px;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
 }
 .restaurant-container {
   display: flex;
