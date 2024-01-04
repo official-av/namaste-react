@@ -9,3 +9,5 @@ export const GET_RESTAURANTS_URL =
 
 export const GET_RESTAURANT_DETAILS_URL =
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=";
+
+  export const GET_USERS_URL = 'https://github.com/search?q=official-av&type=users';

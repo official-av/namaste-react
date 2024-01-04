@@ -98,6 +98,12 @@ body {
   justify-content: space-between;
 }
 
+.user-card {
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid black;
+  border-radius: 5px;
+}
 .shimmer {
   color: grey;
   display: inline-block;
