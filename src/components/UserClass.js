@@ -27,8 +27,6 @@ export class UserClass extends React.Component {
     const { count } = this.state;
     return (
       <div className="user-card">
-        {/* <button onClick={this.increaseCount.bind(this)}>ClickMe</button> */}
-        <button onClick={() => this.increaseCount()}>ClickMe</button>
         <img src={avatar_url}></img>
         <h3>{name}</h3>
         <h3>{location}</h3>
@@ -40,5 +38,14 @@ export class UserClass extends React.Component {
 
   componentDidMount() {
     console.log("user class mounted");
+  }
+
+  componentDidUpdate() {
+    console.log("user class updated");
+  }
+
+  componentWillUnmount() {
+    // unmounting happens during commit phase
+    console.log("user class unmounted");
   }
 }

@@ -5,7 +5,6 @@ import { GET_USERS_URL } from "../components/utils/constants";
 
 class AboutUsComponent extends Component {
   constructor(props) {
-    console.log("about us instantiated");
     super(props);
     this.state = {
       user: { name: "av" },
@@ -13,18 +12,15 @@ class AboutUsComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("about us mounted");
     this.fetchUserData();
   }
 
   render() {
-    console.log("about us rendered");
     const { user } = this.state;
     return (
       <div>
         <h1>about us</h1>
-        {/* <User user={user} /> */}
-        <UserClass user={user} />
+        <User user={user} />
         <UserClass user={user} />
       </div>
     );
@@ -34,7 +30,6 @@ class AboutUsComponent extends Component {
     const userAPICallData = await fetch(GET_USERS_URL);
     const { payload } = await userAPICallData.json();
     this.setState({ user: payload?.results[0] });
-    console.log("data fetched after first render");
   };
 }
 export default AboutUsComponent;
