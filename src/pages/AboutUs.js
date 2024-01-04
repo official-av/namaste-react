@@ -4,6 +4,7 @@ import { GET_USERS_URL } from "../components/utils/constants";
 import { UserClass } from "../components/UserClass";
 
 const AboutUsComponent = () => {
+  console.log('about us render started');
   const [user, setUser] = useState({});
 
   useEffect(() => {
