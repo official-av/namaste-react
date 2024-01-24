@@ -1,33 +1,12 @@
-import { useEffect, useState } from "react";
-import { RestaurantCardComponent } from "./RestaurantCard";
 import { useParams } from "react-router-dom";
-import { GET_RESTAURANT_DETAILS_URL } from "../utils/constants";
+import { RestaurantCardComponent } from "./RestaurantCard";
+import useRestaurantMenuHook from "../utils/useRestaurantMenuHook";
 
 const RestaurantMenuComponent = () => {
-  const [restaurantData, setRestaurantData] = useState({});
-  const [restaurantMenuData, setRestaurantMenuData] = useState([]);
   const { restaurantId } = useParams();
 
-  // fetch restaurant data from id
-  useEffect(() => {
-    fetchRestaurantData();
-  }, []);
-
-  const fetchRestaurantData = async () => {
-    const url = `${GET_RESTAURANT_DETAILS_URL}${restaurantId}`;
-    console.log(url,GET_RESTAURANT_DETAILS_URL);
-    const callData = await fetch(url);
-    const { data } = await callData.json();
-
-    setRestaurantData(data?.cards[0]?.card?.card?.info);
-
-    let restaurantMenu =
-      data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card?.card
-        ?.itemCards;
-    restaurantMenu = restaurantMenu?.map((r) => r.card.info);
-
-    setRestaurantMenuData(restaurantMenu);
-  };
+  const { restaurantData, restaurantMenuData } =
+    useRestaurantMenuHook(restaurantId);
 
   return (
     <div className="restaurant-menu">
