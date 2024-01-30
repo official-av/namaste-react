@@ -6,5 +6,6 @@ export const NavItemsComponent = () => (
     <Link to="/about">About Us</Link>
     <Link to="/contact">Contact Us</Link>
     <Link to="/">Cart</Link>
+    <Link to="/"></Link>
   </div>
 );

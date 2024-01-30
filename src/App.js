@@ -7,13 +7,20 @@ import AboutUsComponent from "./pages/AboutUs";
 import ContactUsComponent from "./pages/ContactUs";
 import ErrorComponent from "./components/utils/Error";
 import RestaurantMenuComponent from "./components/restaurant/RestaurantMenu";
+import useInternetStatus from "./components/utils/useInternetStatus";
+import OfflineComponent from "./components/utils/Offline";
 
-const AppLayoutComponent = () => (
-  <div className="layout-container">
-    <HeaderComponent />
-    <Outlet />
-  </div>
-);
+const AppLayoutComponent = () => {
+  const { isOnline } = useInternetStatus();
+
+  return (
+    <div className="layout-container">
+      <HeaderComponent />
+      {!isOnline && <OfflineComponent />}
+      <Outlet />
+    </div>
+  );
+};
 
 const appRouter = createBrowserRouter([
   {
@@ -24,7 +31,10 @@ const appRouter = createBrowserRouter([
       { path: "/", element: <BodyComponent /> },
       { path: "/about", element: <AboutUsComponent /> },
       { path: "/contact", element: <ContactUsComponent /> },
-      { path: "/restaurant/:restaurantId", element: <RestaurantMenuComponent /> },
+      {
+        path: "/restaurant/:restaurantId",
+        element: <RestaurantMenuComponent />,
+      },
     ],
   },
 ]);
