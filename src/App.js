@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import HeaderComponent from "./components/header/Header";
 import BodyComponent from "./components/body/Body";
@@ -10,6 +10,9 @@ import RestaurantMenuComponent from "./components/restaurant/RestaurantMenu";
 import useInternetStatus from "./components/utils/useInternetStatus";
 import OfflineComponent from "./components/utils/Offline";
 
+// on demand loading with lazy
+const Grocery = lazy(() => import("./components/Grocery"));
+const GroceryFallback = () => <h1>Loading Groceries...</h1>;
 const AppLayoutComponent = () => {
   const { isOnline } = useInternetStatus();
 
@@ -31,6 +34,14 @@ const appRouter = createBrowserRouter([
       { path: "/", element: <BodyComponent /> },
       { path: "/about", element: <AboutUsComponent /> },
       { path: "/contact", element: <ContactUsComponent /> },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<GroceryFallback />}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
       {
         path: "/restaurant/:restaurantId",
         element: <RestaurantMenuComponent />,
