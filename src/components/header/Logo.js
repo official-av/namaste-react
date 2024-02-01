@@ -3,8 +3,8 @@ import { LOGO_URL } from "../utils/constants";
 
 export const LogoComponent = () => (
   <Link to="/">
-    <div className="logo-container">
-      <img className="logo" src={LOGO_URL} />
+    <div className="w-24">
+      <img className="" src={LOGO_URL} />
     </div>
   </Link>
 );

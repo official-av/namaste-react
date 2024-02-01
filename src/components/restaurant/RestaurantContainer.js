@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { RestaurantCardComponent } from "./RestaurantCard";
 export const RestaurantContainer = ({ restaurants }) => (
-  <div className="restaurant-container">
+  <div className="flex flex-wrap justify-around">
     {restaurants.map((r) => (
       <Link to={"/restaurant/" + r.id} key={r.id}>
         <RestaurantCardComponent restaurant={r} />

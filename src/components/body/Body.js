@@ -2,21 +2,12 @@ import { useEffect, useState } from "react";
 import { RestaurantContainer } from "../restaurant/RestaurantContainer";
 import SearchComponent from "../utils/Search";
 import { GET_RESTAURANTS_URL } from "../utils/constants";
+import FilterButton from "../utils/Filter";
 
 let allRestaurants = [];
 let filterSelected = false;
 
-const FilterButtonComponent = ({ filterChangeCallback, filterSelected }) => {
-  console.log("filter rendererd");
-  return (
-    <button
-      className={(filterSelected ? "btn-selected" : "") + " btn-top-rated"}
-      onClick={filterChangeCallback}
-    >
-      Top Rated Restaurants
-    </button>
-  );
-};
+
 
 const BodyComponent = () => {
   console.log("body rendered");
@@ -50,8 +41,8 @@ const BodyComponent = () => {
   };
 
   return (
-    <div className="content-container">
-      <div className="actions-container">
+    <div className="m-4 p-2">
+      <div className="mb-8 flex justify-between">
         <SearchComponent
           searchClickEventCallback={(searchText) =>
             setRestaurants(
@@ -63,7 +54,7 @@ const BodyComponent = () => {
             )
           }
         />
-        <FilterButtonComponent
+        <FilterButton
           filterSelected={filterSelected}
           filterChangeCallback={() => {
             filterSelected = !filterSelected;

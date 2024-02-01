@@ -1,14 +1,12 @@
-import { useState } from "react";
 
 const SearchComponent = ({ searchClickEventCallback }) => {
   console.log("search Rendered");
   // distinctUntilChanged can be used here and debounceTime for debouncing
   return (
-    <div className="search-container">
       <input
         placeholder="Search..."
         type="search"
-        className="search-input"
+        className="p-4 border border-red-600 placeholder-red-600 rounded-xl  focus:outline-none focus:ring focus:ring-red-100"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
             searchClickEventCallback(e.target.value);
@@ -16,7 +14,6 @@ const SearchComponent = ({ searchClickEventCallback }) => {
         }}
         onChange={(e) => searchClickEventCallback(e.target.value)}
       ></input>
-    </div>
   );
 };
 
